@@ -1,5 +1,5 @@
 import React, {Ref, useState} from "react";
-import {Tabs, Typography, Carousel, Table, Rate} from "antd"
+import {Tabs, Typography, Carousel, Table, Rate, Tooltip, Row, Col} from "antd"
 import styles from "./ProductIntro.module.css"
 import {CarouselRef} from "antd/es/carousel";
 import {ColumnsType} from "antd/es/table";
@@ -126,14 +126,23 @@ export const ProductIntro: React.FC<PropsType> = (
       <Typography.Title level={4}>{title}</Typography.Title>
       <Typography.Text>{shortDescription}</Typography.Text>
       <div className={styles["intro-detail-content"]}>
-        <Typography.Text style={{marginLeft: 20}}>
-          ￥<span className={styles["intro-detail-strong-text"]}>{price}</span>
-          {' '}/人起
-        </Typography.Text>
-        <Typography.Text style={{marginLeft: 50}}>
-          <span className={styles["intro-detail-strong-text"]}>{rating}</span>
-          {' '}分
-        </Typography.Text>
+        <Row justify="space-between">
+          <Col push={1}>
+            <Typography.Text>
+              ￥<span className={styles["intro-detail-strong-text"]}>{price}</span>
+              {' '}/人起
+            </Typography.Text>
+            <Tooltip placement="bottom" title="本起价是可选出发日期中，按双人出行共住一间房核算的最低单人价格。产品价格会根据您所选择的出发日期、出行人数、入住酒店房型航班或交通以及所选附加项目的不同而有所差别。">
+              <Typography.Text underline style={{marginLeft: 20, fontSize: 12}}>起价说明</Typography.Text>
+            </Tooltip>
+          </Col>
+          <Col pull={1}>
+            <Typography.Text style={{marginLeft: 50}}>
+              <span className={styles["intro-detail-strong-text"]}>{rating}</span>
+              {' '}分
+            </Typography.Text>
+          </Col>
+        </Row>
         <div className={styles["product-img-container"]}>
           <Carousel autoplay ref={carouselRef} afterChange={handleAfterChange}>
             {

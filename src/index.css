@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f2f5!important;
 }
 
 code {
@@ -30,4 +31,19 @@ code {
   margin-top: 8px;
   color: #666;
   font-size: 12px;
+}
+
+p {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+ul, li {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.ant-anchor-link {
+  padding: 0!important;
+  line-height: 46px!important;
 }

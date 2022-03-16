@@ -1,5 +1,6 @@
 .page-content {
-    width: 1230px;
+    min-width: 980px;
+    max-width: 1180px;
     margin-left: auto;
     margin-right: auto;
     min-height: 75vh;
@@ -18,13 +19,12 @@
 .product-detail-container {
     background: white;
     margin-top: 20px;
-    padding-top: 20px;
     margin-bottom: 30px;
-    padding-bottom: 30px;
+    padding: 20px;
 }
 
 .calendar-container {
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 .date-detail {
@@ -40,4 +40,13 @@
 
 .date-detail .price-text {
     color: #f60;
+}
+
+.travel-info-container {
+    padding: 10px 20px 20px;
+    background-color: #f1f8ff;
+}
+
+.travel-info {
+    margin: 20px 10px 0 10px;
 }
