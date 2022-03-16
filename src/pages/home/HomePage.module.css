@@ -1,0 +1,59 @@
+.page-content {
+    /*指相对于视口来说，占75%*/
+    min-height: 75vh;
+}
+
+.carousel-container {
+    margin-top: 10px;
+}
+
+.side-menu-container {
+    margin-top: -470px;
+    height: 470px;
+    min-width: 980px;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.attractions-introduce {
+    margin-top: 20px;
+}
+
+.attractions-introduce h3 {
+    margin: 50px 0;
+    text-align: center;
+}
+
+.attractions-tab {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.attractions-item-box {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 18px;
+    border: 1px solid #dadfe6;
+    border-radius: 2px;
+    color: #0f294d;
+}
+
+.attractions-item-box:hover {
+    color: #3264ff;
+}
+
+.attractions-item-box.active {
+    border-color: rgba(50,100,255,.0784313725490196);
+    color: #3264ff;
+    background-color: rgba(50,100,255,.0784313725490196);
+}
+
+.attractions-container {
+    min-width: 980px;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+}
