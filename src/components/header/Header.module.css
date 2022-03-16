@@ -18,7 +18,7 @@
 
 .button-group {
     float: right;
-    margin-top: 4px;
+    margin-top: 4px !important;
 }
 
 .main-header {
@@ -72,8 +72,8 @@
 }
 
 .main-menu .main-menu-container {
-    min-width: 980px;
-    max-width: 1180px;
+    min-width: 1020px;
+    max-width: 1220px;
     margin-left: auto;
     margin-right: auto;
     background-color: #1976D2 !important;

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "useUnknownInCatchVariables": false,
+    "noImplicitAny": false,
     "target": "es5",
     "lib": [
       "dom",
@@ -18,7 +20,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ]
   },
   "include": [
     "src"

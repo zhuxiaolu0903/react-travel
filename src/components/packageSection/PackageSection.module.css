@@ -1,0 +1,8 @@
+.package-section-container img {
+    display: inline-block;
+    height: 190px;
+}
+
+.package-section-container .desc-info {
+    margin-top: 5px;
+}

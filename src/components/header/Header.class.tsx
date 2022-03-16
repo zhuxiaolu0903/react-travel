@@ -10,33 +10,60 @@ import {
     Input
 } from "antd";
 import {GlobalOutlined} from "@ant-design/icons";
-import store from "../../redux/store";
-import {LanguageState} from "../../redux/languageReducer";
+import store, {RootState} from "../../redux/store";
+import {withTranslation, WithTranslation} from 'react-i18next'
+import {addLanguageAction, changeLanguageAction} from "../../redux/language/languageActions";
+import {connect} from "react-redux"
+import {Dispatch} from "redux"
 
-interface PropsType {
+// WithTranslation ：i18n props类型
+// ReturnType<typeof mapStateToProps> ：redux store 映射类型
+// ReturnType<typeof mapDispatchToProps> ：redux dispatch 映射类型
+type PropsType = WithTranslation & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        language: state.language.language,
+        languageList:  state.language.languageList
+    }
 }
 
-interface State extends LanguageState {
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        changeLanguage: (code: 'zh' | 'en') => {
+            const action = changeLanguageAction(code)
+            dispatch(action)
+        },
+        addLanguage: (name: string, code: string) => {
+            const action = addLanguageAction(name, code)
+            dispatch(action)
+        }
+    }
 }
 
-export class Header extends React.Component<PropsType, State> {
+class HeaderComponent extends React.Component<PropsType> {
 
-    constructor(prop, state) {
-        super(prop);
-        const storeState = store.getState()
-        this.state = {
-            language: storeState.language,
-            languageList: storeState.languageList
+    menuClickHandler = (e) => {
+        const {key} = e
+        if (key === 'new') {
+            // 新增语言
+             this.props.addLanguage('新语言', 'new_lang')
+        } else {
+            // 切换语言
+            this.props.changeLanguage(key)
         }
     }
 
     render() {
+
+        const {t} = this.props
+
         return (
             <div className={styles['app-header']}>
                 {/*顶部区域*/}
                 <div className={styles['top-header']}>
                     <div className={styles['inner']}>
-                        <Typography.Text>让旅游更幸福</Typography.Text>
+                        <Typography.Text>{t('header.slogan')}</Typography.Text>
                         <Dropdown.Button
                             style={{
                                 marginLeft: 15
@@ -44,21 +71,24 @@ export class Header extends React.Component<PropsType, State> {
                             overlay={
                                 <Menu>
                                     {
-                                        this.state.languageList.map(language => (
-                                            <Menu.Item key={language.code}>
+                                        this.props.languageList.map(language => (
+                                            <Menu.Item key={language.code} onClick={this.menuClickHandler}>
                                                 {language.name}
                                             </Menu.Item>
                                         ))
                                     }
+                                    <Menu.Item key={'new'} onClick={this.menuClickHandler}>
+                                        {t('header.add_new_language')}
+                                    </Menu.Item>
                                 </Menu>
                             }
                             icon={<GlobalOutlined/>}
                         >
-                            语言：{this.state.language}
+                            {t('header.language')}
                         </Dropdown.Button>
                         <Radio.Group className={styles['button-group']}>
-                            <Radio.Button value="注册">注册</Radio.Button>
-                            <Radio.Button value="登录">登录</Radio.Button>
+                            <Radio.Button>{t('header.register')}</Radio.Button>
+                            <Radio.Button>{t('header.signin')}</Radio.Button>
                         </Radio.Group>
                     </div>
                 </div>
@@ -80,25 +110,27 @@ export class Header extends React.Component<PropsType, State> {
                         mode="horizontal"
                         className={styles['main-menu-container']}
                     >
-                        <Menu.Item key="1">旅游首页</Menu.Item>
-                        <Menu.Item key="2">周末游</Menu.Item>
-                        <Menu.Item key="3">跟团游</Menu.Item>
-                        <Menu.Item key="4"> 自由行 </Menu.Item>
-                        <Menu.Item key="5"> 私家团 </Menu.Item>
-                        <Menu.Item key="6"> 邮轮 </Menu.Item>
-                        <Menu.Item key="7"> 酒店+景点 </Menu.Item>
-                        <Menu.Item key="8"> 当地玩乐 </Menu.Item>
-                        <Menu.Item key="9"> 主题游 </Menu.Item>
-                        <Menu.Item key="10"> 定制游 </Menu.Item>
-                        <Menu.Item key="11"> 游学 </Menu.Item>
-                        <Menu.Item key="12"> 签证 </Menu.Item>
-                        <Menu.Item key="13"> 企业游 </Menu.Item>
-                        <Menu.Item key="14"> 高端游 </Menu.Item>
-                        <Menu.Item key="15"> 爱玩户外 </Menu.Item>
-                        <Menu.Item key="16"> 保险 </Menu.Item>
+                        <Menu.Item key="1"> {t("header.home_page")} </Menu.Item>
+                        <Menu.Item key="2"> {t("header.weekend")} </Menu.Item>
+                        <Menu.Item key="3"> {t("header.group")} </Menu.Item>
+                        <Menu.Item key="4"> {t("header.backpack")} </Menu.Item>
+                        <Menu.Item key="5"> {t("header.private")} </Menu.Item>
+                        <Menu.Item key="6"> {t("header.cruise")} </Menu.Item>
+                        <Menu.Item key="7"> {t("header.hotel")} </Menu.Item>
+                        <Menu.Item key="8"> {t("header.local")} </Menu.Item>
+                        <Menu.Item key="9"> {t("header.theme")} </Menu.Item>
+                        <Menu.Item key="10"> {t("header.custom")} </Menu.Item>
+                        <Menu.Item key="11"> {t("header.study")} </Menu.Item>
+                        <Menu.Item key="12"> {t("header.visa")} </Menu.Item>
+                        <Menu.Item key="13"> {t("header.enterprise")} </Menu.Item>
+                        <Menu.Item key="14"> {t("header.high_end")} </Menu.Item>
+                        <Menu.Item key="15"> {t("header.outdoor")} </Menu.Item>
+                        <Menu.Item key="16"> {t("header.insurance")} </Menu.Item>
                     </Menu>
                 </div>
             </div>
         )
     }
 }
+
+export const Header = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(HeaderComponent))

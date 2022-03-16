@@ -1,6 +1,7 @@
 {
     "header": {
         "slogan": "Make travel happier",
+        "language": "language",
         "add_new_language": "add new language",
         "title": "React Travel",
         "register":"Register",
@@ -26,10 +27,9 @@
         "detail" : "All rights reserved @ ReactTravel.com"
     },
     "home_page": {
-        "hot_recommended": "Hot Recommended",
-        "new_arrival": "New arrival",
-        "domestic_travel": "Domestic travel",
-        "joint_venture": "Joint Venture",
-        "start_from": "(start from)"
+        "popular_attractions": "Popular attractions",
+        "travel_world": "Travel the world",
+        "travel_around_border": "Travel around the border",
+        "joint_venture": "Joint Venture"
     }
 }

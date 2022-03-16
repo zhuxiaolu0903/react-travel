@@ -134,31 +134,37 @@ export const productList1 = [
 // 游世界
 export const productList2 = [
   {
+    id: 1,
     title: '迪拜',
     subTitle: '石油大国',
     img: 'https://pic3.40017.cn/poi/2016/02/01/16/4uZxc6_222x436_00.jpg.webp'
   },
   {
+    id: 2,
     title: '悉尼',
     subTitle: '阳光自由之都',
     img: 'https://pic3.40017.cn/poi/2016/03/02/18/k9EyuA_464x208_00.jpg.webp'
   },
   {
+    id: 3,
     title: '巴厘岛',
     subTitle: '万种风情的魔幻岛',
     img: 'https://pic3.40017.cn/poi/2016/02/01/16/2tEr4B_222x208_00.jpg.webp'
   },
   {
+    id: 4,
     title: '礼幌',
     subTitle: '浓烈的北欧风情',
     img: 'https://pic4.40017.cn/poi/2016/07/15/13/aYkwII_222x208_00.jpg.webp'
   },
   {
+    id: 5,
     title: '马尔代夫',
     subTitle: '上帝抛洒的项链',
     img: 'https://pic3.40017.cn/poi/2016/03/02/18/2QIPsF_464x208_00.jpg.webp'
   },
   {
+    id: 6,
     title: '',
     subTitle: '',
     img: 'https://pavo.elongstatic.com/i/ori/000fqu6Z.jpg'
@@ -168,41 +174,49 @@ export const productList2 = [
 // 周边游
 export const productList3 = [
   {
+    id: 7,
     title: '上海南翔希尔顿逸林酒店1晚【 足不出沪   南翔古镇特色  逛吃逛喝南翔印象城】酒店客房1间+双人自助早餐+家庭美食午/晚餐或下午茶+南翔古镇免费游 +免费泳池健身、停车场',
     price: '500',
     img: 'https://s1.lvjs.com.cn//uploads/pc/place2/2021-01-18/d9c974b8-7418-4cc8-ad9e-3eceaa69d7a4_480_320.jpg'
   },
   {
+    id: 8,
     title: '上海长兴岛君澜别院度假酒店1晚【 崇明长兴岛第一滩 呼吸大自然 野外休闲 】特色住宿1间1晚+2大1小早餐+餐饮抵扣券+儿童乐园家庭票+网红彩虹滑道门票+免费长江第一滩、长兴岛郊野公园游玩',
     price: '360',
     img: 'https://s1.lvjs.com.cn//uploads/pc/place2/2021-03-25/74f49259-529e-4146-9ac7-f4d423eb95ba_480_320.jpg'
   },
   {
+    id: 9,
     title: '上海小木屋会务中心1晚【冬季温汤  休闲度假  星空房车 赏星星看月亮】房车一晚+早餐+冬日温汤 温暖旅途 郊区户外生态游',
     price: '699',
     img: 'https://s1.lvjs.com.cn//uploads/pc/place2/2020-05-06/197dd78e-d903-499b-b38e-8c2717339beb_480_320.jpg'
   },
   {
+    id: 10,
     title: '幔麓酒店·杨小姐的花园1晚【迪士尼旁魔都首家野奢洞穴酒店！网红必打卡地 】幔麓大床或双床1晚+双早(儿童免费)+24小时免费畅享餐厅啤酒饮料+汉服文化体验+花园迷迭香采摘制香活动+迪士尼、浦东机场接送+免费停车场+24小时自助洗衣',
     price: '399',
     img: 'https://s1.lvjs.com.cn//uploads/pc/place2/2021-05-07/a2a23f26-6e02-409e-b0dc-34646cd43215_480_320.jpg'
   },
   {
+    id: 11,
     title: '上海绿地万怡酒店1晚【 自助美食盛宴 海鲜日料 】住宿一晚+精致自助早餐2大1小+/周末自助晚餐/ 极乐汤温泉/小灶村 毗邻极乐汤、州桥老街 、南翔古镇、嘉定海洋馆',
     price: '699',
     img: 'https://s1.lvjs.com.cn//uploads/pc/place2/2020-05-06/197dd78e-d903-499b-b38e-8c2717339beb_480_320.jpg'
   },
   {
+    id: 12,
     title: '苏州知音温德姆至尊酒店1晚【领券下单】湖景房（含早）＋双人下午茶/双人自助晚餐/港式午茶代金券（3选1）+首晚minibar+游泳池、健身房、儿童乐园+免费酒店停车',
     price: '758',
     img: 'https://pics.lvjs.com.cn//uploads/pc/place2/2021-06-30/43fcba08-7ea8-48cf-83d5-2271093869a1_480_320.jpg'
   },
   {
+    id: 13,
     title: '苏州也度假·竹邻居精品客栈1晚特色客房/家庭房+双人苏州天颐温泉（步行可达）+免费停车、免费wifi【竹林幽幽，山谷养生温泉，清凉这个夏天】',
     price: '368',
     img: 'https://pics.lvjs.com.cn//uploads/pc/place2/2021-05-20/e46d331a-2f95-4fb7-99a2-c7ed3ba3a4ac_480_320.jpg'
   },
   {
+    id: 14,
     title: '常熟理文铂尔曼酒店1晚【周末不加价】高级房（双早）+双人自助晚餐/下午茶/沙家浜门票/尚湖虞山联票（任选1）+畅玩酒店儿童乐园、健身房、室内游泳池等',
     price: '548',
     img: 'https://pics.lvjs.com.cn//uploads/pc/place2/2018-07-09/97115a3f-c72d-4f8b-8d1a-6b0983d17c54_480_320.jpg'

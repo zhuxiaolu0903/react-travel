@@ -1,23 +1,36 @@
-import { Typography } from "antd"
+import {Typography} from "antd"
 import React from "react"
 import styles from './ProductImage.module.css'
+import {Link} from "react-router-dom";
 
-interface propType {
-    size: 'small' | 'large'
+interface PropsType {
+    id?: number | string,
+    height?: number
     img: string
-    title: string
+    title?: string
+    subTitle?: string
 }
 
-export const ProductImage: React.FC<propType> = ({size, img, title}) => {
+export const ProductImage: React.FC<PropsType> = ({id, height, img, title, subTitle}) => {
+
     return (
-        <div
-            className={styles['image-box']}
-            style={{
-                height: size === 'large' ? '332px' : '158px',
-                backgroundImage: `url(${img})`
-            }}
-        >
-            <Typography.Text>{title}</Typography.Text>
-        </div>
+        <Link to={`detail/${id}`}>
+            <div
+                className={styles['image-box']}
+                style={{
+                    height: `${height}px`,
+                    backgroundImage: `url(${img})`
+                }}
+            >
+                {
+                    title !== '' && subTitle !== '' && (
+                        <div className={styles['image-desc']}>
+                            <Typography.Text>{title}</Typography.Text>
+                            <Typography.Text>{subTitle}</Typography.Text>
+                        </div>
+                    )
+                }
+            </div>
+        </Link>
     )
 }

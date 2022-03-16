@@ -1,0 +1,11 @@
+.side-menu {
+    position: absolute;
+    margin: 20px 0 !important;
+    width: 150px;
+    height: 430px;
+    border-radius: 2px;
+}
+
+.menu-item-container span {
+    margin-right: 10px;
+}

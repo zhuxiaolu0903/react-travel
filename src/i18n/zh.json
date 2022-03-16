@@ -1,6 +1,7 @@
 {
     "header": {
         "slogan": "让旅行更幸福",
+        "language": "语言",
         "add_new_language": "添加新语言",
         "title": "React 旅游网",
         "register":"注册",
@@ -26,10 +27,9 @@
         "detail" : "版权所有 @ React 旅游网"
     },
     "home_page": {
-        "hot_recommended": "爆款推荐",
-        "new_arrival": "新品上市",
-        "domestic_travel": "国内游推荐",
-        "joint_venture": "合作企业",
-        "start_from": "(起)"
+        "popular_attractions": "热门景点",
+        "travel_world": "游世界",
+        "travel_around_border": "周边游",
+        "joint_venture": "合作企业"
     }
 }

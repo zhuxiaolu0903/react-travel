@@ -1,0 +1,119 @@
+.intro-container {
+    padding: 20px
+}
+
+.intro-detail-content {
+    width: 100%;
+    background-color: #fef9ee;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    font-size: 18px;
+}
+
+.intro-detail-strong-text {
+    font-size: 28px;
+    color: rgb(192, 0, 0);
+}
+
+.product-img-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-tab-container {
+    position: absolute;
+    top: 0;
+    right: -140px;
+    width: 140px;
+    height: 320px;
+    transition: all .3s linear;
+}
+
+.slide-tab-container.show {
+    right: 0;
+}
+
+.slide-tab-container.show .slide-tab-content {
+    opacity: 1;
+}
+
+.dire {
+    position: absolute;
+    top: 50%;
+    left: -32px;
+    z-index: 100;
+    width: 32px;
+    height: 62px;
+    margin-top: -31px;
+    background: url(//img1.40017.cn/cn/v/2015/details2016/icons-pull.png) right top no-repeat;
+    cursor: pointer;
+}
+
+.slide-tab-content {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    display: block;
+    width: 140px;
+    height: 320px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.5);
+    opacity: 0;
+    transition: all .3s linear;
+}
+
+.resource-coupon-list {
+    display: inline-block;
+    height: 30px;
+    font-size: 12px;
+}
+
+.resource-coupon-list .resource-coupon-item {
+    position: relative;
+    float: left;
+    height: 22px;
+    margin: 3px 10px 3px 0;
+    padding-left: 7px;
+    border: 1px solid #f60;
+    background: #fff9f3;
+    color: #f60;
+    line-height: 20px;
+}
+
+.resource-coupon-list .resource-coupon-item span {
+    display: block;
+    padding: 0 10px 0 7px;
+    border-left: 1px dashed #f60;
+}
+
+.resource-coupon-list .resource-coupon-item:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    width: 4px;
+    height: 4px;
+    margin-top: -3px;
+    border: 1px solid #f60;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    background: #fff;
+    transform: rotate(45deg);
+    border-radius: 50%;
+}
+
+.resource-coupon-list .resource-coupon-item:after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: -2px;
+    width: 4px;
+    height: 4px;
+    margin-top: -3px;
+    border: 1px solid #f60;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    background: #fff;
+    transform: rotate(225deg);
+    border-radius: 50%;
+}
