@@ -16,10 +16,9 @@ import {useDispatch} from "react-redux";
 import {addLanguageAction, changeLanguageAction} from "../../redux/language/languageActions";
 import {useTranslation} from "react-i18next";
 
-export const Header: React.FC = (props) => {
+export const Header: React.FC = () => {
 
     const navigate = useNavigate()
-    const language = useSelector(state => state.language.language)
     const languageList = useSelector(state => state.language.languageList)
     const dispatch = useDispatch()
     const {t} = useTranslation()
@@ -80,6 +79,7 @@ export const Header: React.FC = (props) => {
                 <Input.Search
                     placeholder="请输入旅游目的地、主题或关键字"
                     className={styles['search-input']}
+                    onSearch={(keyword) => navigate(`/search/${keyword}`)}
                 >
                 </Input.Search>
             </Layout.Header>

@@ -21,7 +21,7 @@ export default (state = defaultState, action: RecommendProductAction) => {
     case FETCH_RECOMMEND_PRODUCTS_SUCCESS:
       return {...state, loading: false, productList: action.payload}
     case FETCH_RECOMMEND_PRODUCTS_FAIL:
-      return {...state, loading: false}
+      return {...state, loading: false, productList: null}
     default:
       return state
   }

@@ -24,9 +24,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 const router = express.Router()
 
+// 查询产品信息
 getProductCollections()
 
+// 获取产品详情
 getProductDetail()
+
+// 搜索产品
+searchProduct()
 
 app.use(router)
 
@@ -60,6 +65,20 @@ function getProductDetail() {
         res.status(404)
         res.end()
       }
+    })
+  })
+}
+
+function searchProduct() {
+  router.get('/api/touristRoutes', function(req, res) {
+    const {keyword, pageNumber, pageSize} = req.query
+    let productList = []
+    let result = {}
+    fs.readFile('./productSearch/data.json', function (err, data) {
+      productList = JSON.parse(data).filter(item => (item['title'].indexOf(keyword) > -1) || (item['description'].indexOf(keyword) > -1))
+      result.total = productList.length
+      result.data = productList.slice(parseInt(pageSize) * (parseInt(pageNumber) - 1), parseInt(pageSize) * parseInt(pageNumber))
+      res.json(result)
     })
   })
 }

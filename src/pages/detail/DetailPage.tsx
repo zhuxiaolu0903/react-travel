@@ -1,16 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from 'react-router-dom';
+import React, {useEffect} from "react";
+import {useParams, RouteProps} from 'react-router-dom';
 import {Header, Footer, ProductIntro} from "../../components";
-import axios from "axios";
 import {
   Col,
   Row,
   DatePicker,
   Spin,
   Calendar,
-  Badge,
   Typography,
-  Rate,
   Select,
   InputNumber,
   Space,
@@ -23,6 +20,9 @@ import {ShoppingCartOutlined} from "@ant-design/icons";
 import {commentMockData} from './mockup'
 import {ProductComments} from '../../components'
 import {UpCircleTwoTone} from "@ant-design/icons/lib";
+import {useSelector} from "../../redux/hooks";
+import {useDispatch} from "react-redux";
+import {getProductDetail} from "../../redux/productDetail/slice";
 
 type MatchParams = {
   touristRouteId: string
@@ -33,9 +33,9 @@ export const DetailPage: React.FC = () => {
   const {RangePicker} = DatePicker;
   const {Option} = Select;
   const {touristRouteId} = useParams<MatchParams>()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [product, setProduct] = useState<any>(null)
-  const navigate = useNavigate()
+  const loading = useSelector(state => state.productDetail.loading)
+  const product = useSelector(state => state.productDetail.data)
+  const dispatch = useDispatch()
 
   // 模拟实时票价数据
   const getPrice = (value) => {
@@ -92,21 +92,7 @@ export const DetailPage: React.FC = () => {
 
   // 获取旅游路线详情
   useEffect(() => {
-    // 旅游路线ID不存在，路由重定向至首页
-    if (touristRouteId === 'undefined') {
-      navigate('/')
-      return
-    }
-    const fetchData = async () => {
-      try {
-        const {data} = await axios.get(`http://127.0.0.1:8080/api/touristRoutes/${touristRouteId}`)
-        setProduct(data.productDetail)
-        setLoading(false)
-      } catch (e) {
-        setLoading(false)
-      }
-    }
-    fetchData()
+    dispatch(getProductDetail(touristRouteId!))
   }, [])
 
   return (

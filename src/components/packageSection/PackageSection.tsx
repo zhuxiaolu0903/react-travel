@@ -4,7 +4,7 @@ import styles from './PackageSection.module.css'
 import {Link} from "react-router-dom";
 
 interface PropsType {
-    id?: number | string,
+    id: number,
     img: string
     title: string
     price: number | string

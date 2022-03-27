@@ -17,9 +17,8 @@ import {
   ProductImage,
   BusinessPartners
 } from '../../components'
-import {PackageSection} from "../../components/packageSection"
+import {PackageSection} from "../../components"
 import {withTranslation, WithTranslation} from 'react-i18next'
-import axios from "axios";
 import {connect} from "react-redux";
 import {RootState} from "../../redux/store";
 import {
@@ -205,7 +204,7 @@ class HomePageComponent extends React.Component<PropsType, Sate> {
                               if (index > 3) return ''
                               return (
                                 <Col span={6} key={`productList3_${index}`}>
-                                  <PackageSection img={item.img} title={item.title}
+                                  <PackageSection id={item.id}  img={item.img} title={item.title}
                                                   price={item.price}/>
                                 </Col>
                               )
