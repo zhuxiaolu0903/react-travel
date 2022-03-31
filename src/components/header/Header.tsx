@@ -63,8 +63,8 @@ export const Header: React.FC = () => {
                         语言
                     </Dropdown.Button>
                     <Radio.Group className={styles['button-group']}>
-                        <Radio.Button value="注册" onClick={() => navigate('register')}>{t('header.register')}</Radio.Button>
-                        <Radio.Button value="登录" onClick={() => navigate('signIn')}>{t('header.signin')}</Radio.Button>
+                        <Radio.Button value="注册" onClick={() => navigate('/register')}>{t('header.register')}</Radio.Button>
+                        <Radio.Button value="登录" onClick={() => navigate('/signIn')}>{t('header.signin')}</Radio.Button>
                     </Radio.Group>
                 </div>
             </div>

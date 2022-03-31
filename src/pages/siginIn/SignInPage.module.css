@@ -1,0 +1,9 @@
+.signIn-page-container {
+  margin: 48px auto;
+  width: 60%
+}
+
+.link-text {
+  font-size: 12px;
+  cursor: pointer;
+}

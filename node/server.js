@@ -33,6 +33,9 @@ getProductDetail()
 // 搜索产品
 searchProduct()
 
+// 用户注册
+register()
+
 app.use(router)
 
 const port = process.env.PORT || 8080
@@ -79,6 +82,30 @@ function searchProduct() {
       result.total = productList.length
       result.data = productList.slice(parseInt(pageSize) * (parseInt(pageNumber) - 1), parseInt(pageSize) * parseInt(pageNumber))
       res.json(result)
+    })
+  })
+}
+
+function register() {
+  router.post('/auth/register', function(req, res) {
+    const {username, password} = req.body
+    fs.readFile('./user/data.json', function (err, data) {
+      const fileData = JSON.parse(data)
+      const index = fileData.findIndex(item => (item['username'].indexOf(username) > -1))
+      if (index > -1) {
+        res.send(false)
+      } else {
+        // 新增一条用户信息
+        fileData.push({
+          username,
+          password
+        })
+        fs.writeFile('./user/data.json', JSON.stringify(fileData), (err) => {
+          if (!err) {
+            res.send(true)
+          }
+        });
+      }
     })
   })
 }
