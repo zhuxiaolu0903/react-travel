@@ -1,12 +1,12 @@
-import React from "react"
-import {Col, Row, Space} from "antd";
-import {ProductImage} from "../productImage/ProductImage";
+import React from 'react'
+import { Col, Row, Space } from 'antd'
+import { ProductImage } from '../productImage'
 
 interface PropsType {
   list: any[]
 }
 
-export const ProductCollection: React.FC<PropsType> = ({list}) => {
+export const ProductCollection: React.FC<PropsType> = ({ list }) => {
   return (
     <Row gutter={16}>
       <Col span={12}>
@@ -18,7 +18,7 @@ export const ProductCollection: React.FC<PropsType> = ({list}) => {
         />
       </Col>
       <Col span={12}>
-        <Space direction={"vertical"} size={'middle'} style={{width: '100%'}}>
+        <Space direction={'vertical'} size={'middle'} style={{ width: '100%' }}>
           <Row gutter={16}>
             <Col span={12}>
               <ProductImage

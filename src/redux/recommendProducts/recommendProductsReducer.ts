@@ -1,7 +1,8 @@
 import {
   FETCH_RECOMMEND_PRODUCTS_FAIL,
   FETCH_RECOMMEND_PRODUCTS_START,
-  FETCH_RECOMMEND_PRODUCTS_SUCCESS, RecommendProductAction
+  FETCH_RECOMMEND_PRODUCTS_SUCCESS,
+  RecommendProductAction,
 } from './recommendProductsActions'
 
 interface RecommendProductsState {
@@ -9,19 +10,19 @@ interface RecommendProductsState {
   productList: any[]
 }
 
-const defaultState = {
+const defaultState: RecommendProductsState = {
   loading: true,
-  productList: []
+  productList: [],
 }
 
 export default (state = defaultState, action: RecommendProductAction) => {
   switch (action.type) {
     case FETCH_RECOMMEND_PRODUCTS_START:
-      return {...state, loading: true}
+      return { ...state, loading: true }
     case FETCH_RECOMMEND_PRODUCTS_SUCCESS:
-      return {...state, loading: false, productList: action.payload}
+      return { ...state, loading: false, productList: action.payload }
     case FETCH_RECOMMEND_PRODUCTS_FAIL:
-      return {...state, loading: false, productList: null}
+      return { ...state, loading: false, productList: [] }
     default:
       return state
   }

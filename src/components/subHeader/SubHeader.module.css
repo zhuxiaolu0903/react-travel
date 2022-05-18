@@ -1,0 +1,41 @@
+.sub-header-container {
+  background-color: white !important;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 !important;
+  box-shadow: 0 4px 8px 0 rgb(69 88 115 / 12%);
+}
+.sub-header-content {
+  display: flex;
+  align-items: center;
+  min-width: 980px;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.app-logo {
+  height: 60px;
+  width: 60px;
+  float: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-logo {
+    animation: app-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes app-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  line-height: 64px !important;
+  display: inline;
+  color: #03a9f4 !important;
+}

@@ -22,7 +22,7 @@ export const searchProduct = createAsyncThunk(
 const initialState = {
   loading: true,
   total: 0,
-  productList: null
+  productList: []
 }
 
 export const productSearchSlice = createSlice({
@@ -40,7 +40,7 @@ export const productSearchSlice = createSlice({
     },
     [searchProduct.rejected.type]: (state) => {
       state.loading = false
-      state.productList = null
+      state.productList = []
       state.total = 0
     }
   }
