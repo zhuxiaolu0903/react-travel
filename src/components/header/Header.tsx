@@ -9,6 +9,7 @@ import {
   Input,
   Divider,
   Modal,
+  Badge,
 } from 'antd'
 import {
   ExclamationCircleOutlined,
@@ -25,6 +26,7 @@ import {
 } from '../../redux/language/languageActions'
 import { useTranslation } from 'react-i18next'
 import { userSlice } from '../../redux/user/slice'
+import {getShoppingCart, shoppingCartSlice} from "../../redux/shoppingCart/slice";
 
 interface JwtPayload extends DefaultJwtPayload {
   username: string
@@ -42,8 +44,14 @@ export const Header: React.FC = () => {
     if (token) {
       const { username } = jwt_decode<JwtPayload>(token)
       setUsername(username)
+      // 请求购物车数据
+      dispatch(getShoppingCart(token))
     }
   }, [token])
+
+  // 获取购物车数据
+  const shoppingCartList = useSelector(state => state.shoppingCart.items)
+  const shoppingCartLoading = useSelector(state => state.shoppingCart.loading)
 
   const menuClickHandler = (e) => {
     const { key } = e
@@ -100,16 +108,21 @@ export const Header: React.FC = () => {
                 {username}
               </a>
               <Divider type="vertical" />
-              <ShoppingCartOutlined />
-              <a
-                href="#"
-                onClick={() => navigate('/shoppingCart')}
-                style={{
-                  marginLeft: 5
-                }}
-              >
-                {t('header.shoppingCart')}
-              </a>
+              {
+                !shoppingCartLoading &&
+                <Badge count={shoppingCartList.length} size={"small"}>
+                  <ShoppingCartOutlined />
+                  <a
+                      href="#"
+                      onClick={() => navigate('/shoppingCart')}
+                      style={{
+                        marginLeft: 5
+                      }}
+                  >
+                    {t('header.shoppingCart')}
+                  </a>
+                </Badge>
+              }
               <Divider type="vertical" />
               <a href="#" onClick={onLogout}>
                 {t('header.signOut')}

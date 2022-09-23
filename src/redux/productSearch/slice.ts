@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
-import axios from "axios";
 
 interface paramsType {
   keyword?: string
@@ -10,11 +9,11 @@ interface paramsType {
 export const searchProduct = createAsyncThunk(
   'productSearch/getProductList',
   async (params: paramsType) => {
-    let url = `http://127.0.0.1:8080/api/touristRoutes?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`
+    let url = `api/touristRoutes?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`
     if (params.keyword) {
       url += '&keyword=' + params.keyword
     }
-    const {data} = await axios.get(url)
+    const {data} = await window.axios.get(url)
     return data
   }
 )

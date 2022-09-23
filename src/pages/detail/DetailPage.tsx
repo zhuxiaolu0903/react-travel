@@ -28,6 +28,7 @@ import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
 import { getProductDetail } from '../../redux/productDetail/slice'
 import { MainLayout } from '../../layouts/mainLayout'
+import { addShoppingCartItem } from '../../redux/shoppingCart/slice'
 
 type MatchParams = {
   touristRouteId: string
@@ -39,6 +40,8 @@ export const DetailPage: React.FC = () => {
   const { touristRouteId } = useParams<MatchParams>()
   const loading = useSelector((state) => state.productDetail.loading)
   const product = useSelector((state) => state.productDetail.data)
+  const shoppingCartLoading = useSelector((state) => state.shoppingCart.loading)
+  const token = useSelector((state) => state.user.token) as string
   const dispatch = useDispatch()
 
   // 模拟实时票价数据
@@ -190,6 +193,15 @@ export const DetailPage: React.FC = () => {
                       type="primary"
                       icon={<ShoppingCartOutlined />}
                       size="large"
+                      loading={shoppingCartLoading}
+                      onClick={() =>
+                        dispatch(
+                          addShoppingCartItem({
+                            token,
+                            itemId: touristRouteId as string,
+                          })
+                        )
+                      }
                     >
                       立即预定
                     </Button>

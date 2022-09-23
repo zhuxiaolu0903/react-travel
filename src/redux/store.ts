@@ -3,6 +3,7 @@ import recommendProductsReducer from './recommendProducts/recommendProductsReduc
 import { actionLanguage } from './middleware'
 import { productDetailSlice } from './productDetail/slice'
 import { productSearchSlice } from './productSearch/slice'
+import { shoppingCartSlice } from "./shoppingCart/slice";
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userSlice } from './user/slice'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -10,10 +11,11 @@ import storage from 'redux-persist/lib/storage'
 
 const rootReducer = combineReducers({
   language: LanguageReducer,
+  user: userSlice.reducer,
   recommendProducts: recommendProductsReducer,
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
-  user: userSlice.reducer,
+  shoppingCart: shoppingCartSlice.reducer
 })
 
 const persistConfig = {

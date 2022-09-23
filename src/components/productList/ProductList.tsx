@@ -1,15 +1,6 @@
 import React from 'react'
 import styles from './ProductList.module.css'
-import {
-  Carousel,
-  Col,
-  List,
-  Rate,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from 'antd'
+import { Carousel, Col, List, Rate, Row, Space, Tag, Typography } from 'antd'
 import { LikeOutlined, StarOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
@@ -18,11 +9,11 @@ interface PropsType {
     productList: any[]
     total: number
   }
-  paging: {
+  paging?: {
     pageNumber: number
     pageSize: number
   }
-  onPageChange: (pageSize: number, pageNumber: number) => void
+  onPageChange?: (pageSize: number, pageNumber: number) => void
 }
 
 export const ProductList: React.FC<PropsType> = ({
@@ -43,14 +34,18 @@ export const ProductList: React.FC<PropsType> = ({
     <List
       itemLayout={'vertical'}
       size={'large'}
-      pagination={{
-        current: paging.pageNumber,
-        size: 'small',
-        showTotal: () => `共 ${data.total} 条`,
-        onChange: (page) => onPageChange(page, paging.pageSize),
-        total: data.total,
-        pageSize: paging.pageSize,
-      }}
+      pagination={
+        paging
+          ? {
+              current: paging.pageNumber,
+              size: 'small',
+              showTotal: () => `共 ${data.total} 条`,
+              onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
+              total: data.total,
+              pageSize: paging.pageSize,
+            }
+          : false
+      }
       dataSource={data.productList}
       renderItem={(item) => (
         <List.Item
@@ -76,7 +71,7 @@ export const ProductList: React.FC<PropsType> = ({
           extra={
             <Carousel autoplay dots={false} style={{ width: 300 }}>
               {item.pictures.map((item) => (
-                <img src={item} key={item} alt=''/>
+                <img src={item} key={item} alt="" />
               ))}
             </Carousel>
           }
@@ -117,6 +112,7 @@ export const ProductList: React.FC<PropsType> = ({
           {item.description}
         </List.Item>
       )}
+      style={{ backgroundColor: '#ffffff' }}
     />
   )
 }

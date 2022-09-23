@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { Modal } from 'antd'
 
 interface UserState {
@@ -15,7 +14,7 @@ const initialState: UserState = {
 export const signIn = createAsyncThunk(
   'userSlice/signIn',
   async (parameters: { username: string; password: string }) => {
-    const { data } = await axios.post('http://127.0.0.1:8080/auth/login', {
+    const { data } = await window.axios.post('/auth/login', {
       username: parameters.username,
       password: parameters.password,
     })

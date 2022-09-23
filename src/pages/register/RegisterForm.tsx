@@ -3,7 +3,6 @@ import { Button, Form, Input, message, Modal } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import styles from './RegisterForm.module.css'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 
 interface PropsType {
@@ -19,7 +18,7 @@ export const RegisterForm: React.FC<PropsType> = ({ themeColor }) => {
     const { username, password } = values
     setSubmitLoading(true)
     try {
-      const res = await axios.post('http://127.0.0.1:8080/auth/register', {
+      const res = await window.axios.post('/auth/register', {
         username,
         password,
       })

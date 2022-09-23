@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Col, List, Row, Typography } from 'antd'
+import { Button, Col, List, Row, Skeleton, Typography } from 'antd'
 import styles from './PaymentCard.module.css'
-import {CheckCircleOutlined} from "@ant-design/icons";
+import { CheckCircleOutlined } from '@ant-design/icons'
+import { useSelector } from '../../redux/hooks'
+import Text from 'antd/es/typography/Text'
 
-enum PAGE_TYPE {
+export enum PAGE_TYPE {
   CART = 'cart',
   ORDER = 'order',
 }
@@ -11,11 +13,18 @@ enum PAGE_TYPE {
 interface PropsType {
   pageType: PAGE_TYPE
   list: any[]
+  loading: boolean
+  originalPrice: number
+  price: number
 }
 
-export const PaymentCard: React.FC<PropsType> = ({ pageType, list }) => {
-  const totalPrice = useState<number>(list.map(item => item.originalPrice).reduce((a, b) => a + b, 0))
-
+export const PaymentCard: React.FC<PropsType> = ({
+  pageType,
+  list,
+  loading,
+  originalPrice,
+  price,
+}) => {
   return (
     <>
       <List
@@ -25,13 +34,23 @@ export const PaymentCard: React.FC<PropsType> = ({ pageType, list }) => {
           </Typography.Title>
         }
         footer={
-          <Row className={styles['payment-card-footer']}>
+          <Row
+            className={styles['payment-card-footer']}
+            justify={'space-between'}
+          >
             <Col>
-              <div className={styles['total-price']}>
-                总价
-                <span>￥{totalPrice}</span>
+              <div>
+                总价：
+                <Typography.Text type="danger" delete>
+                  ￥{originalPrice}
+                </Typography.Text>
               </div>
-              <div className={styles['save-price']}>已省￥{totalPrice}</div>
+              <div>
+                已省：
+                <Typography.Text type="danger">
+                  ￥{price}
+                </Typography.Text>
+              </div>
             </Col>
             <Col>
               <Button type={'primary'} danger icon={<CheckCircleOutlined />}>
@@ -41,15 +60,26 @@ export const PaymentCard: React.FC<PropsType> = ({ pageType, list }) => {
           </Row>
         }
         bordered
-        renderItem={(item: { title: string; price: number }) => (
-          <List.Item>
-            <Row>
-              <Col span={18}>{item.title}</Col>
-              <Col span={6}>{item.price}</Col>
-            </Row>
-          </List.Item>
-        )}
-      />
+        style={{ backgroundColor: '#ffffff', marginLeft: '16px' }}
+      >
+        <div style={{ margin: '18px auto', width: '90%' }}>
+          <Skeleton loading={loading} active>
+            <List.Item.Meta
+              description={list.map(
+                  item => (
+                  <Row key={new Date().getTime()}>
+                    <Col span={18}>
+                      <Typography.Title level={5}>{item.title}</Typography.Title>
+                      <Typography.Text>{item.description}</Typography.Text>
+                    </Col>
+                    <Col span={6}>￥{item.price}</Col>
+                  </Row>
+                )
+              )}
+            />
+          </Skeleton>
+        </div>
+      </List>
     </>
   )
 }

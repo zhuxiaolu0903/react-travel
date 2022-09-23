@@ -11,7 +11,6 @@ const PrivateRoute = ({ isAuthenticated }) => {
 
 function App() {
   const token = useSelector((state) => state.user.token)
-
   return (
     <BrowserRouter>
       <Routes>
