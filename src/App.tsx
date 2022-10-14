@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom'
-import { HomePage, DetailPage, SearchPage, ShoppingCart } from './pages'
+import {HomePage, DetailPage, SearchPage, ShoppingCart, PlaceOrder, _404} from './pages'
 import { Type, UserLayoutContent } from './layouts/userLayout'
 import { useSelector } from './redux/hooks'
 
@@ -28,7 +28,10 @@ function App() {
         <Route element={<PrivateRoute isAuthenticated={token !== null} />}>
           <Route path="/shoppingCart" element={<ShoppingCart />} />
         </Route>
-        <Route path="/*" element={<h1>404</h1>} />
+        <Route element={<PrivateRoute isAuthenticated={token !== null} />}>
+          <Route path="/placeOrder" element={<PlaceOrder />} />
+        </Route>
+        <Route path="/*" element={<_404 />} />
       </Routes>
     </BrowserRouter>
   )

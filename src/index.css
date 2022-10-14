@@ -33,7 +33,25 @@ code {
 
 .no-data-container span {
   margin-top: 8px;
-  color: #666;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+}
+
+.list-no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70px;
+}
+
+.list-no-data-container img {
+  width: 64px;
+  height: 40px;
+}
+
+.list-no-data-container span {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.25);
   font-size: 12px;
 }
 

@@ -35,7 +35,6 @@ export const getAverageRGB = (imgEl) => {
     data = context.getImageData(0, 0, width, height);
   } catch(e) {
     /* security error, img on diff domain */
-    alert('x');
     return defaultRGB;
   }
 

@@ -1,0 +1,6 @@
+.payment-form-container {
+    padding: 32px 30px 10px 16px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(69, 88, 115, 0.12);
+}

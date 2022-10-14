@@ -67,6 +67,7 @@ export const SearchPage: React.FC = () => {
         ) : (
           <div className={styles['product-list-container']}>
             <ProductList
+              loading={loading}
               data={{
                 productList,
                 total,

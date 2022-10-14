@@ -88,6 +88,9 @@ addShoppingCart()
 // 删除购物车
 deleteShoppingCart()
 
+// 结算
+checkout()
+
 // 注册auth路由
 app.use('/auth', authRoutes)
 // 注册API路由
@@ -228,7 +231,7 @@ function addShoppingCart() {
     const { touristRouteId } = req.body
     let result = {
       success: true,
-      touristList: [],
+      shoppingCartList: [],
     }
     // 读取对应产品信息
     fs.readFile('./productSearch/data.json', function (err, data) {
@@ -248,10 +251,11 @@ function addShoppingCart() {
             )
             // 购物车已有此产品
             if (tIndex > -1) {
-              res.end({
+              res.json({
                 success: false,
                 message: '此产品已加入购物车，请勿重复添加',
               })
+              return
             } else {
               // 添加对应产品
               shoppingCartData[sIndex].shoppingCartList.push(fileData[index])
@@ -267,7 +271,7 @@ function addShoppingCart() {
             JSON.stringify(shoppingCartData),
             (err) => {
               if (!err) {
-                result = shoppingCartData[sIndex]
+                result.shoppingCartList = shoppingCartData[sIndex].shoppingCartList
                 res.json(result)
               }
             }
@@ -289,6 +293,7 @@ function deleteShoppingCart() {
     const { touristRouteId } = req.params
     const result = {
       success: true,
+      shoppingCartList: []
     }
     const touristRouteIdList = touristRouteId.split(',')
     fs.readFile('./shoppingCart/data.json', function (err, data) {
@@ -315,6 +320,7 @@ function deleteShoppingCart() {
           JSON.stringify(fileData),
           (err) => {
             if (!err) {
+              result.shoppingCartList = shoppingCartList
               res.json(result)
             }
           }
@@ -325,6 +331,50 @@ function deleteShoppingCart() {
           message: '购物车为空，请先添加商品',
         })
       }
+    })
+  })
+}
+
+function checkout() {
+  apiRoutes.post('/shoppingCart/checkout', function (req, res) {
+    const { username } = req.decoded
+    const result = {
+      success: true,
+      status: 'pending',
+      orderItems: []
+    }
+    fs.readFile('./shoppingCart/data.json', function (err, data) {
+      const fileData = JSON.parse(data)
+      const index = fileData.findIndex((item) => item['username'] === username)
+      if (index > -1) {
+        // 清空购物车
+        const shoppingCartList = JSON.stringify(fileData[index].shoppingCartList)
+        fileData[index].shoppingCartList = []
+        fs.writeFile(
+            './shoppingCart/data.json',
+            JSON.stringify(fileData),
+            (err) => {
+              if (!err) {
+                // 新建订单数据
+                let orderData = {
+                  username,
+                  orderItems: shoppingCartList
+                }
+                result.orderItems = shoppingCartList
+                fs.writeFile(
+                    './order/data.json',
+                    JSON.stringify(orderData),
+                    (err) => {
+                      if (!err) {
+                        res.json(result)
+                      }
+                    }
+                )
+              }
+            }
+        )
+      }
+
     })
   })
 }

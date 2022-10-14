@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {Modal} from "antd";
+import {message, Modal} from "antd";
 
 interface ShoppingCartState {
     loading: boolean
@@ -49,6 +49,17 @@ export const clearShoppingCartItem = createAsyncThunk(
     }
 )
 
+export const checkout = createAsyncThunk(
+    'shoppingCart/checkout',
+    async (token: string) => {
+        const {data} = await window.axios.post('/api/shoppingCart/checkout', {}, {
+            headers: {
+                'x-access-token': token
+            }
+        })
+        return data
+    }
+)
 
 export const shoppingCartSlice = createSlice({
     name: 'shoppingCart',
@@ -77,7 +88,8 @@ export const shoppingCartSlice = createSlice({
                     content: action.payload.message,
                 })
             } else {
-                state.items = action.payload.shoppingCartItems
+                message.success('已添加！')
+                state.items = action.payload.shoppingCartList
             }
         },
         [addShoppingCartItem.rejected.type]: state => {
@@ -90,14 +102,33 @@ export const shoppingCartSlice = createSlice({
             state.loading = false
             if (action.payload.success === false) {
                 Modal.error({
-                    title: '清空失败',
+                    title: '删除失败',
                     content: action.payload.message,
                 })
             } else {
-                state.items = []
+                message.success('已删除！')
+                state.items = action.payload.shoppingCartList
             }
         },
         [clearShoppingCartItem.rejected.type]: state => {
+            state.loading = false
+        },
+        [checkout.pending.type]: state => {
+            state.loading = true
+        },
+        [checkout.fulfilled.type]: (state, action) => {
+            state.loading = false
+            if (action.payload.success === false) {
+                Modal.error({
+                    title: '结算失败',
+                    content: action.payload.message,
+                })
+            } else {
+                message.success('已结算！')
+                state.items = []
+            }
+        },
+        [checkout.rejected.type]: state => {
             state.loading = false
         }
     }

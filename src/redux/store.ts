@@ -8,6 +8,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { userSlice } from './user/slice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import {orderSlice} from "./order/slice";
 
 const rootReducer = combineReducers({
   language: LanguageReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   recommendProducts: recommendProductsReducer,
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
-  shoppingCart: shoppingCartSlice.reducer
+  shoppingCart: shoppingCartSlice.reducer,
+  order: orderSlice.reducer
 })
 
 const persistConfig = {

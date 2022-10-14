@@ -5,6 +5,7 @@ import { LikeOutlined, StarOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 interface PropsType {
+  loading: boolean
   data: {
     productList: any[]
     total: number
@@ -17,6 +18,7 @@ interface PropsType {
 }
 
 export const ProductList: React.FC<PropsType> = ({
+  loading,
   data,
   paging,
   onPageChange,
@@ -40,7 +42,8 @@ export const ProductList: React.FC<PropsType> = ({
               current: paging.pageNumber,
               size: 'small',
               showTotal: () => `共 ${data.total} 条`,
-              onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
+              onChange: (page) =>
+                onPageChange && onPageChange(page, paging.pageSize),
               total: data.total,
               pageSize: paging.pageSize,
             }
@@ -71,7 +74,7 @@ export const ProductList: React.FC<PropsType> = ({
           extra={
             <Carousel autoplay dots={false} style={{ width: 300 }}>
               {item.pictures.map((item) => (
-                <img src={item} key={item} alt="" />
+                <img src={item} key={item} alt="" height={150}/>
               ))}
             </Carousel>
           }

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import {
-  PAGE_TYPE,
   PaymentCard,
   ProductList,
   SubHeader,
@@ -32,6 +31,7 @@ export const ShoppingCart: React.FC = () => {
         >
           <Col span={14}>
             <ProductList
+              loading={loading}
               data={{
                 productList: shoppingCartList,
                 total: shoppingCartList.length,
@@ -40,7 +40,6 @@ export const ShoppingCart: React.FC = () => {
           </Col>
           <Col span={8}>
             <PaymentCard
-              pageType={PAGE_TYPE.CART}
               list={shoppingCartList}
               loading={loading}
               originalPrice={shoppingCartList
@@ -48,8 +47,14 @@ export const ShoppingCart: React.FC = () => {
                 .reduce((a, b) => a + b, 0)}
               price={shoppingCartList
                 .map((item) =>
-                    parseFloat((item.price * (item.discountPresent ? item.discountPresent : 1)).toFixed(2))
-                ).reduce((a, b) => a + b, 0)}
+                  parseFloat(
+                    (
+                      item.price *
+                      (item.discountPresent ? item.discountPresent : 1)
+                    ).toFixed(2)
+                  )
+                )
+                .reduce((a, b) => a + b, 0)}
             />
           </Col>
         </Row>
