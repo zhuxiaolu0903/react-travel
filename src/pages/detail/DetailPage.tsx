@@ -203,7 +203,7 @@ export const DetailPage: React.FC = () => {
                         )
                       }
                     >
-                      立即预定
+                      加入购物车
                     </Button>
                   </div>
                 </div>

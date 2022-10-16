@@ -9,7 +9,7 @@ import {
   Input,
   Divider,
   Modal,
-  Badge,
+  Badge, message,
 } from 'antd'
 import {
   ExclamationCircleOutlined,
@@ -27,6 +27,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { userSlice } from '../../redux/user/slice'
 import {getShoppingCart, shoppingCartSlice} from "../../redux/shoppingCart/slice";
+import rootStore from "../../redux/store";
 
 interface JwtPayload extends DefaultJwtPayload {
   username: string
@@ -114,7 +115,13 @@ export const Header: React.FC = () => {
                   <ShoppingCartOutlined />
                   <a
                       href="#"
-                      onClick={() => navigate('/shoppingCart')}
+                      onClick={() => {
+                        if (shoppingCartList.length === 0) {
+                          message.success('购物车为空，请先添加商品！')
+                          return
+                        }
+                        navigate('/shoppingCart')}
+                      }
                       style={{
                         marginLeft: 5
                       }}

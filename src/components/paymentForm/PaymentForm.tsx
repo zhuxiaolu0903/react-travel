@@ -5,6 +5,7 @@ import 'react-credit-cards/es/styles-compiled.css'
 import { Form, Input } from 'antd'
 import { useSelector } from '../../redux/hooks'
 import jwt_decode, { JwtPayload as DefaultJwtPayload } from 'jwt-decode'
+import {CreditCardOutlined, UserOutlined} from "@ant-design/icons";
 interface JwtPayload extends DefaultJwtPayload {
   username: string
 }
@@ -50,14 +51,16 @@ export const PaymentForm: React.FC = () => {
           initialValues={{ remember: true }}
           autoComplete="off"
         >
-          <Form.Item label="姓名">
-            <Input value={username} />
+          <Form.Item>
+            <Input value={username} prefix={<UserOutlined />} />
           </Form.Item>
-          <Form.Item label="卡号">
+          <Form.Item>
             <Input
               value={cardNo}
               onChange={handleInputChange}
               onFocus={handleInputFocus}
+              prefix={<CreditCardOutlined />}
+              ref={(input) => input && input.focus()}
             />
           </Form.Item>
         </Form>

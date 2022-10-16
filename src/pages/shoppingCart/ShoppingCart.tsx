@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react'
-import {
-  PaymentCard,
-  ProductList,
-  SubHeader,
-} from '../../components'
-import { Col, Row, Space } from 'antd'
+import { PaymentCard, ProductList, SubHeader } from '../../components'
+import { Col, Row, Space, Spin } from 'antd'
 import { useSelector } from '../../redux/hooks'
 import { getShoppingCart } from '../../redux/shoppingCart/slice'
 import { useDispatch } from 'react-redux'
@@ -30,13 +26,7 @@ export const ShoppingCart: React.FC = () => {
           className={styles['shopping-cart-content-wrapper']}
         >
           <Col span={14}>
-            <ProductList
-              loading={loading}
-              data={{
-                productList: shoppingCartList,
-                total: shoppingCartList.length,
-              }}
-            />
+            <ProductList data={shoppingCartList} loading={loading} />
           </Col>
           <Col span={8}>
             <PaymentCard

@@ -5,11 +5,11 @@ import {
   CloseOutlined,
   DeleteOutlined, ExclamationCircleOutlined,
 } from '@ant-design/icons'
+import styles from './PaymentCard.module.css'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
 import {checkout, clearShoppingCartItem} from '../../redux/shoppingCart/slice'
 import listNoData from '../../assets/list-no-data.png'
-import {userSlice} from "../../redux/user/slice";
 import {useNavigate} from "react-router-dom";
 
 interface PropsType {
@@ -29,9 +29,13 @@ export const PaymentCard: React.FC<PropsType> = ({
   const deleteLoading = useSelector((state) => state.shoppingCart.loading)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const gotoShoppingCart = () => {
+    navigate('/search')
+  }
   return (
     <>
       <List
+        dataSource={list}
         header={
           <Row justify={'space-between'}>
             <Col>
@@ -60,6 +64,22 @@ export const PaymentCard: React.FC<PropsType> = ({
             </Col>
           </Row>
         }
+        locale={{
+          emptyText: (
+            <div className={styles['payment-card-no-data']}>
+              <img src={listNoData} alt="暂无数据" />
+              <span>
+                购物车为空，
+                <span
+                  style={{ color: '#1890ff', cursor: 'pointer' }}
+                  onClick={gotoShoppingCart}
+                >
+                  添加商品
+                </span>
+              </span>
+            </div>
+          ),
+        }}
         footer={
           list.length > 0 && (
             <Row
@@ -82,7 +102,7 @@ export const PaymentCard: React.FC<PropsType> = ({
                   // @ts-ignore
                   const {payload} = await dispatch(checkout(token))
                   if (payload.success) {
-                    navigate('/placeOrder')
+                    navigate('/placeOrder1')
                   }
                 }}>
                   去支付

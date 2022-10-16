@@ -1,19 +1,23 @@
 import React from 'react'
 import styles from './ProductList.module.css'
-import { Carousel, Col, List, Rate, Row, Space, Tag, Typography } from 'antd'
+import {
+  Carousel,
+  Col,
+  List,
+  Rate,
+  Row,
+  Space,
+  Spin,
+  Tag,
+  Typography,
+} from 'antd'
 import { LikeOutlined, StarOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 interface PropsType {
   loading: boolean
-  data: {
-    productList: any[]
-    total: number
-  }
-  paging?: {
-    pageNumber: number
-    pageSize: number
-  }
+  data: any[]
+  paging?: any
   onPageChange?: (pageSize: number, pageNumber: number) => void
 }
 
@@ -32,7 +36,18 @@ export const ProductList: React.FC<PropsType> = ({
     )
   }
 
-  return (
+  return loading ? (
+    <Spin
+      size="large"
+      style={{
+        marginTop: 200,
+        marginBottom: 200,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '100%',
+      }}
+    />
+  ) : (
     <List
       itemLayout={'vertical'}
       size={'large'}
@@ -41,15 +56,15 @@ export const ProductList: React.FC<PropsType> = ({
           ? {
               current: paging.pageNumber,
               size: 'small',
-              showTotal: () => `共 ${data.total} 条`,
+              showTotal: () => `共 ${paging.total} 条`,
               onChange: (page) =>
                 onPageChange && onPageChange(page, paging.pageSize),
-              total: data.total,
+              total: paging.total,
               pageSize: paging.pageSize,
             }
           : false
       }
-      dataSource={data.productList}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item
           key={item.title}
@@ -74,7 +89,7 @@ export const ProductList: React.FC<PropsType> = ({
           extra={
             <Carousel autoplay dots={false} style={{ width: 300 }}>
               {item.pictures.map((item) => (
-                <img src={item} key={item} alt="" height={150}/>
+                <img src={item} key={item} alt="" height={150} />
               ))}
             </Carousel>
           }

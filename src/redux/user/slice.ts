@@ -28,6 +28,7 @@ export const userSlice = createSlice({
   reducers: {
     onLogout: (state) => {
       state.token = null
+      window.location.reload()
     },
   },
   extraReducers: {

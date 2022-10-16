@@ -1,3 +1,21 @@
+.shopping-cart-container {
+  margin: 20px auto;
+  min-width: 980px;
+  max-width: 1180px;
+}
+
+.product-list-container {
+  margin-bottom: 24px;
+  padding: 24px 24px 0;
+  border-radius: 2px;
+  background-color: #ffffff;
+}
+
+.payment-card-container {
+  padding: 0 24px;
+  border-radius: 2px;
+  background-color: #ffffff;
+}
 .shopping-cart-content-wrapper {
     width: 80%;
     margin: 0 auto;

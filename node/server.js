@@ -38,7 +38,7 @@ apiRoutes.use((req, res, next) => {
   // 只拦截部分接口
   const { url } = req
   // 拦截名单
-  const whiteList = ['shoppingCart', 'orders']
+  const whiteList = ['shoppingCart', 'order']
   if (whiteList.findIndex((item) => url.includes(item)) > -1) {
     const token =
       req.body.token || req.query.token || req.headers['x-access-token']
@@ -90,6 +90,12 @@ deleteShoppingCart()
 
 // 结算
 checkout()
+
+// 下单
+placeOrder()
+
+// 查询是否有待支付的订单
+queryPendingOrder()
 
 // 注册auth路由
 app.use('/auth', authRoutes)
@@ -193,11 +199,15 @@ function searchProduct() {
     let productList = []
     let result = {}
     fs.readFile('./productSearch/data.json', function (err, data) {
-      productList = JSON.parse(data).filter(
-        (item) =>
-          item['title'].indexOf(keyword) > -1 ||
-          item['description'].indexOf(keyword) > -1
-      )
+      if (!keyword) {
+        productList = JSON.parse(data)
+      } else {
+        productList = JSON.parse(data).filter(
+          (item) =>
+            item['title'].indexOf(keyword) > -1 ||
+            item['description'].indexOf(keyword) > -1
+        )
+      }
       result.total = productList.length
       result.data = productList.slice(
         parseInt(pageSize) * (parseInt(pageNumber) - 1),
@@ -218,7 +228,7 @@ function getShoppingCart() {
       if (index > -1) {
         result = fileData[index]
       } else {
-        result = {}
+        result = { username, shoppingCartList: [] }
       }
       res.json(result)
     })
@@ -251,7 +261,7 @@ function addShoppingCart() {
             )
             // 购物车已有此产品
             if (tIndex > -1) {
-              res.json({
+              return res.json({
                 success: false,
                 message: '此产品已加入购物车，请勿重复添加',
               })
@@ -291,7 +301,7 @@ function deleteShoppingCart() {
   apiRoutes.delete('/shoppingCart/items/:touristRouteId', function (req, res) {
     const { username } = req.decoded
     const { touristRouteId } = req.params
-    const result = {
+    let result = {
       success: true,
       shoppingCartList: []
     }
@@ -314,12 +324,18 @@ function deleteShoppingCart() {
             })
           }
         })
-        fileData[index].shoppingCartList = shoppingCartList
+        // 如果当前用户的购物车被清空了，则清除这条记录
+        if (shoppingCartList.length === 0) {
+          fileData.splice(index, 1)
+        } else {
+          fileData[index].shoppingCartList = shoppingCartList
+        }
         fs.writeFile(
           './shoppingCart/data.json',
           JSON.stringify(fileData),
           (err) => {
             if (!err) {
+              result.shoppingCartList = shoppingCartList
               result.shoppingCartList = shoppingCartList
               res.json(result)
             }
@@ -338,43 +354,110 @@ function deleteShoppingCart() {
 function checkout() {
   apiRoutes.post('/shoppingCart/checkout', function (req, res) {
     const { username } = req.decoded
-    const result = {
+    let result = {
       success: true,
-      status: 'pending',
-      orderItems: []
+      orderItem: {}
     }
     fs.readFile('./shoppingCart/data.json', function (err, data) {
       const fileData = JSON.parse(data)
       const index = fileData.findIndex((item) => item['username'] === username)
       if (index > -1) {
-        // 清空购物车
-        const shoppingCartList = JSON.stringify(fileData[index].shoppingCartList)
+        let shoppingCartList = fileData[index].shoppingCartList
         fileData[index].shoppingCartList = []
-        fs.writeFile(
+        let orderItem = {
+          items: shoppingCartList,
+          status: 'pending'
+        }
+        fs.readFile('./order/data.json', function (err, data) {
+          const orderData = JSON.parse(data)
+          const oIndex = orderData.findIndex((item) => item['username'] === username)
+          if (oIndex > -1) {
+            const orderList = orderData[oIndex].orderList
+            orderData[oIndex].orderList.push(orderItem)
+          } else {
+            orderData.push({
+              username,
+              orderList: [orderItem]
+            })
+          }
+          // 清空购物车
+          fs.writeFile(
             './shoppingCart/data.json',
             JSON.stringify(fileData),
             (err) => {
               if (!err) {
-                // 新建订单数据
-                let orderData = {
-                  username,
-                  orderItems: shoppingCartList
-                }
-                result.orderItems = shoppingCartList
+                // 新增订单数据
                 fs.writeFile(
-                    './order/data.json',
-                    JSON.stringify(orderData),
-                    (err) => {
-                      if (!err) {
-                        res.json(result)
-                      }
+                  './order/data.json',
+                  JSON.stringify(orderData),
+                  (err) => {
+                    if (!err) {
+                      result.orderItem = orderItem
+                      res.json(result)
                     }
+                  }
                 )
               }
             }
-        )
+          )
+        })
+      } else {
+        res.json({
+          success: false,
+          message: '购物车为空，请先添加商品',
+        })
       }
+    })
+  })
+}
 
+function placeOrder() {
+  apiRoutes.post('/order/placeOrder1', function (req, res) {
+    const { username } = req.decoded
+    const result = {
+      success: true
+    }
+    fs.readFile('./order/data.json', function (err, data) {
+      const fileData = JSON.parse(data)
+      const index = fileData.findIndex((item) => item['username'] === username)
+      if (index > -1) {
+        fileData.splice(index, 1)
+        fs.writeFile(
+            './order/data.json',
+            JSON.stringify(fileData),
+            (err) => {
+              if (!err) {
+                res.json(result)
+              }
+            }
+        )
+      } else {
+        res.json({
+          success: false,
+          message: '暂无需要支付的订单！',
+        })
+      }
+    })
+  })
+}
+
+function queryPendingOrder() {
+  apiRoutes.get('/order/queryPendingOrder', function (req, res) {
+    const { username } = req.decoded
+    const result = {
+      success: true,
+      orderItems: []
+    }
+    fs.readFile('./order/data.json', function (err, data) {
+      const fileData = JSON.parse(data)
+      const index = fileData.findIndex((item) => item['username'] === username)
+      if (index > -1) {
+        const orderItems = fileData[index].orderList.filter(item => item.status === 'pending')
+        if (orderItems.length > 0) {
+          result.orderItems = orderItems
+        }
+      }
+      res.json(result)
     })
   })
 }

@@ -58,11 +58,12 @@ export const CheckOutCard: React.FC<PropsType> = ({
                   type={'primary'}
                   danger
                   icon={<CheckCircleOutlined />}
+                  loading={loading}
                   onClick={async () => {
                     // @ts-ignore
                     const { payload } = await dispatch(placeOrder(token))
                     if (payload.success) {
-                      navigate('/placeSuccess')
+                      navigate('/placeSuccess1')
                     }
                   }}
                 >
